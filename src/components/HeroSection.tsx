@@ -78,7 +78,7 @@ export default function HeroSection() {
       <div className="w-full max-w-md rounded-3xl border border-aura-100 bg-white shadow-xl p-6 sm:p-8">
         {/* Heading */}
         <h1 className="text-center text-xl font-bold text-aura-800 sm:text-2xl">
-          Manifest Your Dream Life – Masterclass by Ankit Neerav
+          Manifest Your Dream Life – Scientific Masterclass with <br></br>Ankit Neerav
         </h1>
 
         {/* Poster */}
@@ -108,7 +108,7 @@ export default function HeroSection() {
 
         {/* What You’ll Discover */}
         <div className="mt-6">
-          <h2 className="font-semibold text-ink-700">What You’ll Discover</h2>
+          <h2 className="font-semibold text-ink-700">What You’ll Learn</h2>
           <ul className="mt-3 space-y-2 text-sm text-ink-600">
             <li className="flex gap-2"><span className="text-aura-600">✓</span>The scientific principle behind manifestation</li>
             <li className="flex gap-2"><span className="text-aura-600">✓</span>How biology, physics & chemistry prove “You are the Universe”</li>
@@ -125,25 +125,26 @@ export default function HeroSection() {
 
              
                 {/* Razorpay Payment Button */}
-        <div className="mt-8 rounded-xl bg-aura-50 border border-aura-200 p-4 shadow-sm">
-          <h3 className="text-center text-base font-semibold text-aura-800 mb-3">
-            Reserve Your Spot
+                {/* Razorpay Payment Button */}
+        <div className="mt-8 rounded-xl bg-aura-50 border border-aura-200 p-4 shadow-sm text-center">
+          <h3 className="text-sm sm:text-base font-semibold text-aura-800 mb-3 flex items-center justify-center gap-1">
+            <span className="text-orange-500">⚡</span> Limited seats at ₹9 only.
           </h3>
+
           <div className="flex justify-center">
             <div className="w-full max-w-[220px]">
               <RazorpayPaymentButton />
             </div>
           </div>
-          <p className="mt-3 text-center text-xs text-ink-600">
+
+          <p className="mt-3 text-xs text-ink-600">
             Secure • Instant confirmation
           </p>
         </div>
 
 
 
-        <p className="mt-3 text-center text-sm text-aura-800 font-bold">
-          ⚡ Limited seats at ₹9 only.
-        </p>
+        
         <p className="text-center text-xs text-ink-500">
           Claim your spot now and start manifesting your dream life!
         </p>
