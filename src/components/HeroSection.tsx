@@ -110,30 +110,36 @@ export default function HeroSection() {
         <div className="mt-6">
           <h2 className="font-semibold text-ink-700">What You’ll Discover</h2>
           <ul className="mt-3 space-y-2 text-sm text-ink-600">
-            <li className="flex gap-2"><span className="text-aura-600">✓</span>How the Law of Attraction really works in daily life</li>
-            <li className="flex gap-2"><span className="text-aura-600">✓</span>3 scientific experiments proving the power of the universe</li>
-            <li className="flex gap-2"><span className="text-aura-600">✓</span>How your mind influences reality</li>
-            <li className="flex gap-2"><span className="text-aura-600">✓</span>The secret to communicating with the universe</li>
-            <li className="flex gap-2"><span className="text-aura-600">✓</span>Why manifestation fails for most people &amp; how to fix it</li>
+            <li className="flex gap-2"><span className="text-aura-600">✓</span>The scientific principle behind manifestation</li>
+            <li className="flex gap-2"><span className="text-aura-600">✓</span>How biology, physics & chemistry prove “You are the Universe”</li>
+            <li className="flex gap-2"><span className="text-aura-600">✓</span>Real experiments showing thoughts create reality</li>
+            <li className="flex gap-2"><span className="text-aura-600">✓</span>Why manifestation often fails & the #1 fix</li>
+            <li className="flex gap-2"><span className="text-aura-600">✓</span>Simple steps to align science + spirituality</li>
           </ul>
         </div>
+ <div className="mt-6 rounded-2xl border border-aura-100 p-4">
+          <p className="mt-2 text-sm text-ink-600 font-bold">
+           Perfect for working professionals struggling with unfulfillment, entrepreneurs wanting financial growth, and anyone feeling stuck despite their best efforts.
+          </p>
+        </div>
 
-        {/* Who Is This For? */}
-        <div className="mt-6">
-          <h2 className="font-semibold text-ink-700">Who Is This For?</h2>
-          <ul className="mt-3 space-y-2 text-sm text-ink-600">
-            <li className="flex gap-2"><span className="text-aura-600">✓</span>Tried manifestation but saw no results</li>
-            <li className="flex gap-2"><span className="text-aura-600">✓</span>Want to improve health, wealth, romance, and balance</li>
-            <li className="flex gap-2"><span className="text-aura-600">✓</span>Curious about science + spirituality</li>
-            <li className="flex gap-2"><span className="text-aura-600">✓</span>Skeptical about manifestation but open to learning</li>
-          </ul>
+             
+                {/* Razorpay Payment Button */}
+        <div className="mt-8 rounded-xl bg-aura-50 border border-aura-200 p-4 shadow-sm">
+          <h3 className="text-center text-base font-semibold text-aura-800 mb-3">
+            Reserve Your Spot
+          </h3>
+          <div className="flex justify-center">
+            <div className="w-full max-w-[220px]">
+              <RazorpayPaymentButton />
+            </div>
+          </div>
+          <p className="mt-3 text-center text-xs text-ink-600">
+            Secure • Instant confirmation
+          </p>
         </div>
 
 
-        {/* Razorpay Payment Button */}
-        <div className="mt-6">
-          <RazorpayPaymentButton />
-        </div>
 
         <p className="mt-3 text-center text-sm text-aura-800 font-bold">
           ⚡ Limited seats at ₹9 only.

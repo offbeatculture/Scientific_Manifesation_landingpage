@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route , Navigate  } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import EnergyResetOffer from "./pages/HomeFb2";
+import ThankYou from "./pages/ThankYou";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +18,7 @@ const App = () => (
         <Routes>
          <Route path="/" element={<NotFound />} />
           <Route path="/fb1" element={<Index />} />
+          <Route path="/ty-smm-fb1" element={<ThankYou />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -8,11 +8,11 @@ const Index = () => {
 
   useEffect(() => {
     // Update meta tags for SEO
-    document.title = "Energy Transformation Challenge - From Chaotic Overthinker to Peaceful Powerhouse";
+    document.title = "Manifest Your Dream Life – 90-Minute Science-Based Masterclass with Ankit Neerav (Only ₹9)";
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Transform your energy in 2 days! Heal your gut, calm your mind, and reset your energy with Dr. Valarmathi Srinivasan. Join the Energy Reset Challenge for ₹99.');
+      metaDescription.setAttribute('content', 'Join Ankit Neerav’s 90-Minute Science-Backed Manifestation Masterclass and learn practical Law of Attraction techniques, scientific experiments, and proven frameworks. Limited seats at just ₹9 – claim your spot today..');
     }
   }, []);
   useFacebookPixel();
@@ -24,7 +24,7 @@ const Index = () => {
           height="1"
           width="1"
           style={{ display: "none" }}
-          src="https://www.facebook.com/tr?id=1525232074920142&ev=PageView&noscript=1"
+          src="https://www.facebook.com/tr?id=586972862820606&ev=PageView&noscript=1"
           alt=""
         />
       </noscript>

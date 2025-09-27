@@ -1,7 +1,7 @@
 // src/hooks/useFacebookPixel.ts
 import { useEffect } from "react";
 
-const PIXEL_ID = "1525232074920142";
+const PIXEL_ID = "586972862820606";
 
 interface PixelOptions {
   eventName?: string;
