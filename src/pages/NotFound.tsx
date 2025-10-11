@@ -81,7 +81,7 @@ const NotFound = () => {
 
         {/* Price */}
         <div className="mt-4 flex items-baseline justify-center gap-3">
-          <span className="text-2xl font-extrabold text-aura-700">₹9</span>
+          <span className="text-2xl font-extrabold text-aura-700">Free</span>
           <span className="text-base text-ink-500 line-through">₹2999</span>
           <span className="ml-1 inline-flex items-center rounded-full bg-gild-100 px-2 py-0.5 text-xs font-medium text-ink-700">
             Limited seats
@@ -132,7 +132,7 @@ const NotFound = () => {
           <RazorpayPaymentButton />
         </div>
 
-        <p className="mt-3 text-center text-sm text-aura-800">⚡ Limited seats at ₹9 only.</p>
+        <p className="mt-3 text-center text-sm text-aura-800">⚡ Limited seats  only.</p>
         <p className="text-center text-xs text-ink-500">
           Claim your spot now and start manifesting your dream life!
         </p>

@@ -92,7 +92,7 @@ export default function HeroSection() {
 
         {/* Price blurb */}
         <div className="mt-4 flex items-baseline justify-center gap-3">
-          <span className="text-2xl font-extrabold text-aura-700">₹9</span>
+          <span className="text-2xl font-extrabold text-aura-700">Free</span>
           <span className="text-base text-ink-500 line-through">₹2999</span>
           <span className="ml-1 inline-flex items-center rounded-full bg-gild-100 px-2 py-0.5 text-xs font-medium text-ink-700">
             Limited seats
@@ -128,7 +128,7 @@ export default function HeroSection() {
                 {/* Razorpay Payment Button */}
         <div className="mt-8 rounded-xl bg-aura-50 border border-aura-200 p-4 shadow-sm text-center">
           <h3 className="text-sm sm:text-base font-semibold text-aura-800 mb-3 flex items-center justify-center gap-1">
-            <span className="text-orange-500">⚡</span> Limited seats at ₹9 only.
+            <span className="text-orange-500">⚡</span> Limited seats only.
           </h3>
 
           <div className="flex justify-center">
