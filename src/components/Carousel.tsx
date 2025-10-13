@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Calendar } from "lucide-react";
-import heroImage from "@/assets/coach2.jpeg";
+import heroImage from "@/assets/coach3.jpeg";
 
 /* Sheets: A1 contains the full "Date • Time" line */
 const SHEET_CSV_URL =
