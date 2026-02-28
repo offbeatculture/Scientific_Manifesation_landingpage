@@ -4,40 +4,41 @@ import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 
 const WA_GROUP_LINK = "https://join.ankitneerav.com/wap-fb";
 
-const PIXEL_MAIN = "586972862820606";
-const PIXEL_LEADS = "1235272225360337";
-
 export default function ThankYouFb() {
-  // Loads script + init both pixels + PageView
+  // Initializes pixels + PageView
   useFacebookPixel();
 
- useEffect(() => {
-  if (!window.fbq) return;
+  useEffect(() => {
+    document.title =
+      "Thank You – Manifest Your Dream Life Masterclass with Ankit Neerav";
 
-  // ✅ Fire PageView ONLY for pixel 586...
-  window.fbq("trackSingle", "586972862820606", "PageView");
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute(
+        "content",
+        "Thank you for registering for Ankit Neerav’s Manifest Your Dream Life – Science-Based Masterclass. Join the WhatsApp group now to get updates and reminders."
+      );
+    }
 
-  // ✅ Fire Lead events ONLY for pixel 123...
-  window.fbq("trackSingle", "1235272225360337", "Lead",);
-  window.fbq("trackSingleCustom", "1235272225360337", "Lead-Website");
-}, []);
+    // ✅ Fire Lead events
+    if (window.fbq) {
+      // Standard event
+      window.fbq("track", "Lead");
+
+      // Custom event
+      window.fbq("trackCustom", "Lead-Website");
+    }
+  }, []);
 
   return (
     <section className="min-h-screen bg-gradient-to-b from-aura-50 via-white to-white flex items-center justify-center px-4 py-10">
-      {/* Optional noscript fallback (usually not needed for SPA) */}
+      
       <noscript>
         <img
           height="1"
           width="1"
           style={{ display: "none" }}
-          src={`https://www.facebook.com/tr?id=${PIXEL_MAIN}&ev=PageView&noscript=1`}
-          alt=""
-        />
-        <img
-          height="1"
-          width="1"
-          style={{ display: "none" }}
-          src={`https://www.facebook.com/tr?id=${PIXEL_LEADS}&ev=Lead&noscript=1`}
+          src="https://www.facebook.com/tr?id=586972862820606&ev=PageView&noscript=1"
           alt=""
         />
       </noscript>
