@@ -2,27 +2,65 @@ import { useEffect, useState } from "react";
 import { Calendar } from "lucide-react";
 import heroImage from "@/assets/coach3.jpeg";
 
-/* Sheets: A1 contains the full "Date • Time" line */
+/* Google Sheet (Published as CSV): Column A = Date, Column B = Time */
 const SHEET_CSV_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR4mFJJmIvI8PNLHMBVKXgZFw3QwFCeKXsAfA9znX8iUt5CrdC6sa4Gg8ALke_AzX0O5MbeR70SNESh/pub?gid=47810550&single=true&output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTwPzzgnuxnM99svb-wpxDwzfPA-3lZP9cVqLv4hMH0GtKLollq3-tOFZ0jgzug_-vl3zXvo_HBYNs/pub?gid=43987342&single=true&output=csv";
 
-/* Tiny CSV parser */
+/* Tiny CSV parser (handles quotes + CRLF safely) */
 function parseCSV(text: string): string[][] {
   const rows: string[][] = [];
-  let cur = "", row: string[] = [], inQuotes = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i], n = text[i + 1];
-    if (c === '"' && inQuotes && n === '"') { cur += '"'; i++; continue; }
-    if (c === '"') { inQuotes = !inQuotes; continue; }
-    if (c === "," && !inQuotes) { row.push(cur); cur = ""; continue; }
-    if ((c === "\n" || c === "\r") && !inQuotes) {
-      if (cur.length || row.length) { row.push(cur); rows.push(row); row = []; cur = ""; }
+  let cur = "";
+  let row: string[] = [];
+  let inQuotes = false;
+
+  const s = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    const n = s[i + 1];
+
+    // escaped quote inside quotes ("")
+    if (c === '"' && inQuotes && n === '"') {
+      cur += '"';
+      i++;
       continue;
     }
+
+    // toggle quotes
+    if (c === '"') {
+      inQuotes = !inQuotes;
+      continue;
+    }
+
+    // comma separator
+    if (c === "," && !inQuotes) {
+      row.push(cur);
+      cur = "";
+      continue;
+    }
+
+    // newline separator
+    if (c === "\n" && !inQuotes) {
+      row.push(cur);
+      rows.push(row);
+      row = [];
+      cur = "";
+      continue;
+    }
+
     cur += c;
   }
-  if (cur.length || row.length) { row.push(cur); rows.push(row); }
-  return rows.filter(r => r.length && r.some(x => x.trim() !== ""));
+
+  // push final cell/row
+  if (cur.length || row.length) {
+    row.push(cur);
+    rows.push(row);
+  }
+
+  // trim + remove empty rows
+  return rows
+    .map((r) => r.map((x) => (x ?? "").trim()))
+    .filter((r) => r.some((x) => x !== ""));
 }
 
 export const Carousel = () => {
@@ -30,11 +68,21 @@ export const Carousel = () => {
 
   useEffect(() => {
     fetch(`${SHEET_CSV_URL}&cb=${Date.now()}`, { cache: "no-store" })
-      .then(r => r.text())
-      .then(txt => {
+      .then((r) => r.text())
+      .then((txt) => {
         const rows = parseCSV(txt);
-        const a1 = rows?.[0]?.[0]?.trim();
-        if (a1) setDateTime(a1);
+
+        // Find first non-header row (skip "Date,Time")
+        const dataRow =
+          rows.find((r) => (r[0] || "").toLowerCase() !== "date" && r[0]) ??
+          rows[1] ??
+          rows[0];
+
+        const date = (dataRow?.[0] || "").trim(); // Column A
+        const time = (dataRow?.[1] || "").trim(); // Column B
+
+        if (date && time) setDateTime(`LIVE: ${date} • ${time}`);
+        else if (date) setDateTime(`LIVE: ${date}`);
       })
       .catch(() => {});
   }, []);
@@ -103,7 +151,8 @@ export const Carousel = () => {
             </div>
 
             <div className="text-[12px] text-[#2B2620]/70">
-              Over <span className="font-semibold">2,847</span> people registered in last 48 hours
+              Over <span className="font-semibold">2,847</span> people registered
+              in last 48 hours
             </div>
           </div>
 
@@ -147,8 +196,8 @@ export const Carousel = () => {
 
             <p className="text-[15px] text-[#2B2620]/80">
               Worth <span className="line-through">₹2,499</span> →{" "}
-              <span className="font-semibold">Today Only Free</span> • 90-Minute LIVE with{" "}
-              <span className="font-semibold">Ankit Neerav</span>
+              <span className="font-semibold">Today Only Free</span> • 90-Minute
+              LIVE with <span className="font-semibold">Ankit Neerav</span>
             </p>
 
             {/* CTA → scroll to register */}
@@ -167,10 +216,7 @@ export const Carousel = () => {
         <div className="mt-8 md:mt-12 h-px w-full bg-[#E9E4D6]" />
 
         {/* Guarantee */}
-        <div className="mt-6 text-center text-[12px] text-[#2B2620]/70">
-          <span className="font-semibold">IRON-CLAD GUARANTEE:</span> If the first 30 minutes
-          don’t give you chills from the scientific evidence .
-        </div>
+     
       </div>
     </section>
   );

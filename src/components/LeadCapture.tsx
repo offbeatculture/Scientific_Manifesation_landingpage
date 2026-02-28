@@ -1,20 +1,30 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 // 🔗 Your live n8n webhook
-const N8N_WEBHOOK = "https://offbeatn8n.coachswastik.com/webhook-test/smm-fb1";
+const N8N_WEBHOOK = "https://offbeatn8n.coachswastik.com/webhook/smm-fb12";
 
 type Status = "idle" | "submitting" | "success" | "error";
+type CurrentStatus =
+  | "Business Owner / Entrepreneur"
+  | "Working Professional"
+  | "Freelancer / Self-Employed"
+  | "Student / Recent Graduate"
+  | "Other";
 
 export default function LeadCapture() {
   const [status, setStatus] = useState<Status>("idle");
   const [msg, setMsg] = useState<string>("");
+
   const [values, setValues] = useState({
     name: "",
     email: "",
     phone: "",
+    reason: "",
+    currentStatus: "" as CurrentStatus | "",
     company: "", // honeypot
   });
 
+  // ✅ UTM capture (safe for client-side; this component should be client-rendered)
   const utms = useMemo(() => {
     const p = new URLSearchParams(window.location.search);
     return {
@@ -32,8 +42,14 @@ export default function LeadCapture() {
 
   const handleChange =
     (field: keyof typeof values) =>
-    (e: React.ChangeEvent<HTMLInputElement>) =>
+    (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) =>
       setValues((s) => ({ ...s, [field]: e.target.value }));
+
+  const handleStatusChange = (v: CurrentStatus) => {
+    setValues((s) => ({ ...s, currentStatus: v }));
+  };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +57,13 @@ export default function LeadCapture() {
     // Honeypot
     if (values.company.trim() !== "") return;
 
-    if (!values.name.trim() || !isEmail(values.email) || !isPhone(values.phone)) {
+    if (
+      !values.name.trim() ||
+      !isEmail(values.email) ||
+      !isPhone(values.phone) ||
+      !values.reason.trim() ||
+      !values.currentStatus
+    ) {
       setStatus("error");
       setMsg("Please fill in all fields correctly.");
       return;
@@ -55,6 +77,8 @@ export default function LeadCapture() {
         name: values.name.trim(),
         email: values.email.trim(),
         phone: values.phone.replace(/\s+/g, ""),
+        reason: values.reason.trim(),
+        current_status: values.currentStatus,
         page: window.location.href,
         timestamp: new Date().toISOString(),
         ...utms,
@@ -70,14 +94,25 @@ export default function LeadCapture() {
         body: JSON.stringify(payload),
       });
 
-      // n8n may return 200, 201, or 204 depending on your Respond node
       if (!(res.status >= 200 && res.status < 300)) {
         throw new Error(`Webhook ${res.status}`);
       }
 
       setStatus("success");
-      setMsg("🎉 Registration successful! Check your WhatsApp & email for details.");
-      setValues({ name: "", email: "", phone: "", company: "" });
+      setMsg("🎉 Registration successful! Redirecting...");
+
+      // optional: clear fields before redirect
+      setValues({
+        name: "",
+        email: "",
+        phone: "",
+        reason: "",
+        currentStatus: "" as any,
+        company: "",
+      });
+
+      // ✅ Redirect after success
+      window.location.assign("/ty-smm-fb12");
     } catch (err) {
       console.error(err);
       setStatus("error");
@@ -85,9 +120,17 @@ export default function LeadCapture() {
     }
   };
 
+  const statusOptions: CurrentStatus[] = [
+    "Business Owner / Entrepreneur",
+    "Working Professional",
+    "Freelancer / Self-Employed",
+    "Student / Recent Graduate",
+    "Other",
+  ];
+
   return (
     <section id="register" className="py-12 px-4 flex flex-col items-center">
-      {/* Section Heading (outside the card) */}
+      {/* Section Heading */}
       <h2 className="text-2xl sm:text-3xl font-extrabold text-black text-center mb-6">
         Register Now
       </h2>
@@ -137,6 +180,43 @@ export default function LeadCapture() {
             className="w-full rounded-xl border border-aura-200 bg-white px-4 py-2.5 text-ink-700 outline-none focus:ring-2 focus:ring-aura-300"
             required
           />
+
+          {/* ✅ NEW: Reason for joining (Textarea) */}
+          <textarea
+            value={values.reason}
+            onChange={handleChange("reason")}
+            placeholder="Reason For Joining"
+            rows={3}
+            className="w-full resize-none rounded-xl border border-aura-200 bg-white px-4 py-2.5 text-ink-700 outline-none focus:ring-2 focus:ring-aura-300"
+            required
+          />
+
+          {/* ✅ NEW: Current Status (Radio group) */}
+          <div className="pt-1">
+            <p className="text-sm font-semibold text-ink-700 mb-2">
+              Select your current status
+            </p>
+
+            <div className="grid gap-2">
+              {statusOptions.map((opt) => (
+                <label
+                  key={opt}
+                  className="flex items-center gap-2 text-sm text-ink-700"
+                >
+                  <input
+                    type="radio"
+                    name="currentStatus"
+                    value={opt}
+                    checked={values.currentStatus === opt}
+                    onChange={() => handleStatusChange(opt)}
+                    className="h-4 w-4 accent-aura-700"
+                    required
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </div>
+          </div>
 
           <button
             type="submit"

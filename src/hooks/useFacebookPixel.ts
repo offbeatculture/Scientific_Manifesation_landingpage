@@ -1,26 +1,25 @@
 // src/hooks/useFacebookPixel.ts
 import { useEffect } from "react";
 
-const PIXEL_ID = "586972862820606";
+const PIXEL_IDS = ["586972862820606", "1235272225360337"];
 
-interface PixelOptions {
-  eventName?: string;
-  eventParams?: Record<string, any>;
+declare global {
+  interface Window {
+    fbq?: any;
+    _fbq?: any;
+  }
 }
 
-export function useFacebookPixel({ eventName, eventParams }: PixelOptions = {}) {
+export function useFacebookPixel() {
   useEffect(() => {
-    // if already loaded, just track and return
+    // if already loaded → init all pixels + PageView
     if (window.fbq) {
-      window.fbq("init", PIXEL_ID);
+      PIXEL_IDS.forEach((id) => window.fbq("init", id));
       window.fbq("track", "PageView");
-      if (eventName) {
-        window.fbq("track", eventName, eventParams || {});
-      }
       return;
     }
 
-    // create fbq and queue until script loads
+    // load script once
     (function (f: any, b: any, e: any, v: any, n: any, t: any, s: any) {
       if (f.fbq) return;
       n = f.fbq = function () {
@@ -38,10 +37,8 @@ export function useFacebookPixel({ eventName, eventParams }: PixelOptions = {}) 
       s.parentNode!.insertBefore(t, s);
     })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js", null, null, null);
 
-    window.fbq!("init", PIXEL_ID);
+    // init all pixels
+    PIXEL_IDS.forEach((id) => window.fbq!("init", id));
     window.fbq!("track", "PageView");
-    if (eventName) {
-      window.fbq!("track", eventName, eventParams || {});
-    }
-  }, [eventName, eventParams]);
+  }, []);
 }

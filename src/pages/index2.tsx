@@ -8,7 +8,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { FinalCTASection } from "@/components/FinalCTASection";
 import { StickyBottomCTA } from "@/components/StickyBottomCTA";
 import { useFadeInAnimation } from "@/hooks/useFadeInAnimation";
-import { useFacebookPixel } from "@/hooks/useFacebookPixelHome";
+import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 import {Carousel} from "@/components/Carousel"
 import LeadCapture from "@/components/LeadCapture";
 
