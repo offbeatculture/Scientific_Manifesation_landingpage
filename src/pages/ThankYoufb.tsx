@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 
-const WA_GROUP_LINK = "https://join.ankitneerav.com/wap-fb";
+const WA_GROUP_LINK = "http://join.ankitneerav.com/smm-wap-fb";
 
 export default function ThankYouFb() {
   // Initializes pixels + PageView

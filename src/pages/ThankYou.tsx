@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 
-const WA_GROUP_LINK = "https://join.ankitneerav.com/wap-fb";
+const WA_GROUP_LINK = "http://join.ankitneerav.com/smm-wap-fb";
 
 export default function ThankYou() {
   // Fire PageView + your purchase event with value/currency
