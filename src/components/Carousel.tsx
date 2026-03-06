@@ -195,7 +195,7 @@ export const Carousel = () => {
             </div>
 
             <p className="text-[15px] text-[#2B2620]/80">
-              Worth <span className="line-through">₹2,499</span> →{" "}
+              Worth <span className="line-through">₹499</span> →{" "}
               <span className="font-semibold">Today Only Free</span> • 90-Minute
               LIVE with <span className="font-semibold">Ankit Neerav</span>
             </p>
